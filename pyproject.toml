@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "coinbider"
+version = "0.1.0"
+description = "It will help you to get info about selected crypto currency."
+authors = ["AlexanderF048 <alexandr.frankevich@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.29"
+ccxt = "^4.2.96"
+psycopg2 = "^2.9.9"
+sqlalchemy-serializer = "^1.4.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
