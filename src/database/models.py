@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, CHAR, ForeignKey, func, DateTime, Float, TIME
+from sqlalchemy import Column, Integer, CHAR, func, DateTime
 from sqlalchemy.dialects.mysql import FLOAT
-from sqlalchemy.orm import relationship
+
 from sqlalchemy_serializer import SerializerMixin
 
 from db_connection import Base, engine
@@ -17,5 +17,4 @@ class CoinBid(Base, SerializerMixin):
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
     Base.metadata.bind = engine
-
     exit()

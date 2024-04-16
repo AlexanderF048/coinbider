@@ -1,4 +1,3 @@
-import json
 from aiohttp import web
 
 from ccxt_controllers import get_bid_ticker, get_paginated_bid_history, clean_base
@@ -12,11 +11,10 @@ routes = web.RouteTableDef()
 def get_history_pagination(request):
     print("hello im in history")
     page_num = request.rel_url.query.get("page")
-
+    print(page_num)
 
     response_obj = get_paginated_bid_history(page=page_num)
 
-    #return web.Response(status=200, text="HISTORY WITH PAGINATION")
     return web.json_response(response_obj)
 
 

@@ -1,11 +1,6 @@
 import asyncio
 
 from aiohttp import web
-import requests
-
-from typing import Any, AsyncIterator, Awaitable, Callable, Dict
-
-import json
 
 from router import routes
 
