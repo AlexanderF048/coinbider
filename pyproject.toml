@@ -10,7 +10,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-sqlalchemy = "^2.0.29"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.29"}
 ccxt = "^4.2.96"
 psycopg2 = "^2.9.9"
 sqlalchemy-serializer = "^1.4.12"
