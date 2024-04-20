@@ -4,6 +4,10 @@ import asyncio
 from src.database.db_connection import session
 from src.database.models import CoinBid
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 exchange = ccxt.kucoin()
 
 
@@ -22,7 +26,7 @@ def get_bid_ticker(coin: str, exch=exchange):
         currency=exch.fetch_ticker(f'{coin}/USDT')['symbol'],
         price=exch.fetch_ticker(f'{coin}/USDT')['bid']
     )
-    print(f"{coin} to USDT now :::>", exch.fetch_ticker(f'{coin}/USDT')['bid'], exch.fetch_ticker(f'{coin}/USDT'))
+    logging.info(f"{coin} to USDT now :::>", exch.fetch_ticker(f'{coin}/USDT')['bid'], exch.fetch_ticker(f'{coin}/USDT'))
 
     return Coin
 
@@ -31,7 +35,7 @@ def get_bid_history():
 
     db_selection = session.query(CoinBid).all()
     for i in db_selection:
-        print(f"--{i.time}--{i.id}.{i.currency} ({i.price})")
+        logging.info(f"--{i.time}--{i.id}.{i.currency} ({i.price})")
 
     return db_selection
 
@@ -40,6 +44,7 @@ def clean_base():
 
     session.query(CoinBid).delete()
     session.commit()
+    logging.info('BASE CLEAN')
 
     return
 
