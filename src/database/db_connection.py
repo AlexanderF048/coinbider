@@ -22,7 +22,12 @@ print(url_to_db)
 
 engine = create_engine(url_to_db, echo=True,
                        pool_size=5)  # poetry add psycopg2 - установить драйвер для движка postgresql!
+
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 Base = declarative_base()
+
+if __name__ == '__main__':
+
+    exit()

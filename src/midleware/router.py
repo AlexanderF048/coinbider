@@ -1,9 +1,9 @@
 from aiohttp import web
+import logging
 
 from ccxt_controllers import get_bid_ticker, get_paginated_bid_history, clean_base, coin_list_creator
 from db_connection import session
 
-import logging
 
 logging.basicConfig(level=logging.INFO)
 
@@ -21,7 +21,7 @@ async def get_history_pagination(request):
         if response_obj:
             logging.info('PAGES - JSON GENERATED AND SENT')
             return web.json_response(response_obj)
-        
+
         elif not response_obj:
             logging.info('PAGES - JSON EMPTY')
             return web.Response(status=204, text='NO PAGES TO SEND')
@@ -43,13 +43,13 @@ async def delete_bids_history(request):
 
 # http://0.0.0.0:8080/price/BTC <or currency you want to download>
 @routes.get('/price/{currency}', name='bid')
-def get_bid(request):
+async def get_bid(request):
     resp_curr = request.match_info['currency']
 
-    if resp_curr in coin_list_creator():
+    if resp_curr in await coin_list_creator():
 
         try:
-            curr_obj = get_bid_ticker(resp_curr)
+            curr_obj = await get_bid_ticker(resp_curr)
 
             session.add(curr_obj)
             session.commit()
@@ -60,3 +60,7 @@ def get_bid(request):
             return web.Response(status=404, text=str(error))
     else:
         return web.Response(status=400, text="Try again Not Found")
+
+
+if __name__ == '__main__':
+    exit()

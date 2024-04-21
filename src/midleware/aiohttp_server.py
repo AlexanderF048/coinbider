@@ -1,27 +1,23 @@
-import asyncio
-
 from aiohttp import web
-
+import aiohttp_debugtoolbar
 from router import routes
 
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
-application = web.Application()
 
+async def server_app_factory(router=routes):
 
-def run_aiohttp_server():
-    application.add_routes(routes)
-    logging.info('Routes added')
-    web.run_app(application)
-    return
+    application = web.Application()
+    application.add_routes(router)
+    aiohttp_debugtoolbar.setup(application)
+
+    return application
 
 
 if __name__ == '__main__':
 
-    run_aiohttp_server()
-
-
+    web.run_app(server_app_factory())
 
     exit()

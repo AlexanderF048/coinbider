@@ -1,27 +1,26 @@
 from aiohttp import web
-import asyncio
-
-from aiohttp_server import run_aiohttp_server
-from ccxt_controllers import coin_list_creator
+from pathlib import Path
+import logging
 
 from db_connection import Base, engine
+from midleware.aiohttp_server import server_app_factory
 
-from midleware.aiohttp_server import run_aiohttp_server
+logging.basicConfig(level=logging.INFO)
 
 
-def main():
+def main(app=server_app_factory(), db_eng=engine):
+    # DB check does 'Coin_bid' exists
+    if not db_eng.dialect.has_table(engine.connect(), 'Coin_bid'):
+        logging.info(f"NO TABLE 'Coin_bid'")
+        Base.metadata.create_all(db_eng)
+        Base.metadata.bind = db_eng
+        logging.info(f"TABLE 'Coin_bid' CREATED")
+
     # server run
-    run_aiohttp_server()
-
-    # DB
-    Base.metadata.create_all(engine)
-    Base.metadata.bind = engine
-
-    return
+    web.run_app(app)
 
 
 if __name__ == '__main__':
-
     main()
 
     exit()

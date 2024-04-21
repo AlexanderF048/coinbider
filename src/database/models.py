@@ -15,6 +15,8 @@ class CoinBid(Base, SerializerMixin):
 
 
 if __name__ == '__main__':
+    
     Base.metadata.create_all(engine)
     Base.metadata.bind = engine
+
     exit()
